@@ -1,4 +1,4 @@
-VERSION= r2
+VERSION= r3
 PKG= compat-5.1$(VERSION)
 DIST_DIR= $(PKG)
 TAR_FILE= $(PKG).tar.gz
