@@ -54,10 +54,13 @@ end
 --
 -- new require
 --
+local package = package
+local loaded = package.loaded
+local preload = package.preload
 function _G.require (name)
-  if not package.loaded[name] then
-    package.loaded[name] = true
-    local f = package.preload[name]
+  if not loaded[name] then
+    loaded[name] = true
+    local f = preload[name]
     if not f then
       local filename = string.gsub(name, "%.", "/")
       local fullname = search(package.cpath, filename)
@@ -71,14 +74,15 @@ function _G.require (name)
         end
         f = assert(loadfile(fullname))
       end
+      preload[name] = f
     end
     local old_arg = arg
     arg = { name }
     local res = f(name)
 	arg = old_arg
-    if res then package.loaded[name] = res end
+    if res then loaded[name] = res end
   end
-  return package.loaded[name]
+  return loaded[name]
 end
 
 
@@ -124,7 +128,7 @@ function _G.module (name)
     ns._PACKAGE = string.gsub(name, "[^.]*$", "")
   end
   setmetatable(ns, {__index = _G})
-  _G.package.loaded[name] = ns
+  loaded[name] = ns
   setfenv(2, ns)
   return ns
 end
