@@ -1,4 +1,8 @@
-package = {}
+--
+-- avoid overwriting the package table if it's already there
+--
+package = package or {}
+
 package.path = LUA_PATH or os.getenv("LUA_PATH") or
              ("./?.lua;" ..
               "/usr/local/share/lua/5.0/?.lua;" ..
@@ -12,17 +16,18 @@ package.cpath = os.getenv("LUA_CPATH") or
 --
 -- make sure require works with standard libraries
 --
-package.loaded = {
-    string = string,
-    math = math,
-    io = io,
-    os = os,
-    table = table,
-    base = _G
-}
+package.loaded = package.loaded or {}
+package.loaded.string = string
+package.loaded.math = math
+package.loaded.io = io
+package.loaded.os = os
+package.loaded.table = table 
+package.loaded.base = base
 
-package.preload = {}
-
+--
+-- avoid overwriting the package.preload table if it's already there
+--
+package.preload = package.preload or {}
 
 --
 -- looks for a file `name' in given path
@@ -109,8 +114,9 @@ function _G.module (name)
   if not ns._NAME then
     ns._NAME = name
     ns._PACKAGE = string.gsub(name, "[^.]*$", "")
-    setmetatable(ns, {__index = _G})
   end
+  setmetatable(ns, {__index = _G})
   _G.package.loaded[name] = ns
   setfenv(2, ns)
+  return ns
 end

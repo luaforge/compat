@@ -51,16 +51,19 @@ LUALIB_API void luaL_module(lua_State *L, const char *libname,
     if (lua_isnil(L, -1)) { 
       lua_pop(L, 1); /* get rid of nil */
       lua_newtable(L); /* create namespace for lib */
-      lua_pushvalue(L, -1);
-      setfield(L, libname);  /* register global name */
-      lua_pushstring(L, "package");
-      lua_gettable(L, LUA_GLOBALSINDEX);
-      lua_pushstring(L, "loaded");
-      lua_gettable(L, -2);
+      getfield(L, "package.loaded"); /* get package.loaded table or create it */
+      if (lua_isnil(L, -1)) {
+          lua_pop(L, 1);
+          lua_newtable(L);
+          lua_pushvalue(L, -1);
+          setfield(L, "package.loaded");
+      }
       lua_pushstring(L, libname);
-      lua_pushvalue(L, -5);
+      lua_pushvalue(L, -3); 
       lua_settable(L, -3); /* store namespace in package.loaded table */
-      lua_pop(L, 2); /* get rid of package and loaded tables */
+      lua_pop(L, 1); /* get rid of package.loaded table */
+      lua_pushvalue(L, -1);
+      setfield(L, libname);  /* store namespace it in globals table */
     }
     lua_insert(L, -(nup+1));  /* move library table to below upvalues */
   }
