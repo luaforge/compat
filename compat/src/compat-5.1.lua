@@ -107,7 +107,7 @@ function _G.module (name)
     setmetatable(ns, {__index = _G})
     setfield(_G, name, ns)
     ns._NAME = name
-    ns._PACK = string.gsub(name, "[^.]*$", "")
+    ns._PACKAGE = string.gsub(name, "[^.]*$", "")
   end
   _G.package.loaded[name] = ns
   setfenv(2, ns)
