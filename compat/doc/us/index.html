@@ -1,142 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <html>
-
 <head>
+<meta name="generator" content="HTML Tidy, see www.w3.org">
 <title>Packages for Lua</title>
 <style type="text/css">
 ul { list-style-type: disc };
 </style>
 </head>
-
 <body bgcolor="#FFFFFF">
-
 <center>
-<table border=0 cellspacing=2 cellpadding=2>
-<tr><td align=center><a href="http://www.keplerproject.org">
-<img border=0 alt="Compat-5.1" src="compat.png"></a>
-<tr><td align=center><big><b>Compat</b></big>
-<tr><td align=center valign=top>Lua 5.1 Package Compatibility for Lua 5.0
+<table border="0" cellspacing="2" cellpadding="2">
+<tr>
+<td align="center"><a href="http://www.keplerproject.org"><img
+border="0" alt="Compat-5.1" src="compat.png"></a> </td>
+</tr>
+
+<tr>
+<td align="center"><big><b>Compat</b></big> </td>
+</tr>
+
+<tr>
+<td align="center" valign="top">Lua 5.1 Package Compatibility for
+Lua 5.0</td>
+</tr>
 </table>
 </center>
-<p>
 
-<center><small>
-<a href="#over">overview</a> &middot;
-<a href="#download">download</a> &middot;
-<a href="#examples">examples</a>
-</small></center>
-<p>
+<center><small><a href="#over">overview</a> &middot; <a href=
+"#download">download</a> &middot; <a href=
+"#examples">examples</a></small></center>
 
 <hr>
 <h2>Contents</h2>
-<p>
+
 <ul>
-  <li> <a href="#over">Overview</a>
-  <li> <a href="#version">Current Version</a>
-  <li> <a href="#download">Download</a>
-  <li> <a href="#examples">Examples</a>
-  <li> <a href="#credits">Credits</a>
-  <li> <a href="#contact">Contact us</a>
+<li><a href="#over">Overview</a></li>
+
+<li><a href="#version">Current Version</a></li>
+
+<li><a href="#download">Download</a></li>
+
+<li><a href="#examples">Examples</a></li>
+
+<li><a href="#credits">Credits</a></li>
+
+<li><a href="#contact">Contact us</a></li>
 </ul>
 
-<a name="over"></a>
+<a name="over"></a> 
+
 <h2>Overview</h2>
-<p>
-The Package Compatibility (Compat-5.1) is a set of files which provides an
-implementation of the new package model of Lua 5.1 to be used in Lua 5.0.
-The set of files consists of a Lua file and a pair of a C source and header
-files.
-<p>
-The Lua file reimplements the function <tt>require</tt> following the new
-behavior and adds the function <tt>module</tt>;
+
+<p>The Package Compatibility (Compat-5.1) is a set of files which
+provides an implementation of the new package model of Lua 5.1 to
+be used in Lua 5.0. The set of files consists of a Lua file and a
+pair of a C source and header files.</p>
+
+<p>The Lua file reimplements the function <tt>require</tt>
+following the new behavior and adds the function <tt>module</tt>;
 it also defines the table <tt>package</tt> and its standard fields:
-<tt>path</tt>, <tt>cpath</tt>, <tt>loaded</tt> and <tt>preload</tt>.
-<p>
-The C source file implements the function <tt>luaL_module</tt>.
-This function can replace the original <tt>luaL_openlib</tt> function.
-<p>
-Compat-5.1 is free software and uses the same
-<a href="license.html">license</a>
-as Lua 5.0.
+<tt>path</tt>, <tt>cpath</tt>, <tt>loaded</tt> and
+<tt>preload</tt>.</p>
 
+<p>The C source file implements the function <tt>luaL_module</tt>.
+This function can replace the original <tt>luaL_openlib</tt>
+function.</p>
 
-<a name="version"></a>
+<p>Compat-5.1 is free software and uses the same <a href=
+"license.html">license</a> as Lua 5.0. <a name="version"></a></p>
+
 <h2>Current version</h2>
-<p>
-Current version is compat-5.1 release 1.
-It was developed for Lua 5.0.
-</p>
 
+<p>Current version is compat-5.1 release 1. It was developed for
+Lua 5.0.</p>
 
-<a name="download"></a>
+<a name="download"></a> 
+
 <h2>Download</h2>
-<p>
-Compat-5.1 are a set of source files that can be downloaded from the <a href="http://luaforge.net/project/showfiles.php?group_id=82">LuaForge page</a>.
+
+<p>Compat-5.1 are a set of source files that can be downloaded from
+the <a href=
+"http://luaforge.net/project/showfiles.php?group_id=82">LuaForge
+page</a>.</p>
 
 <h2>What's new</h2>
-<p>
+
 <ul>
-  <li>[29/oct/2004] Release 1
+<li>[29/oct/2004] Release 1</li>
 </ul>
 
-
-<a name="reference">
 <h2>Reference</h2>
 
 <ul>
-  <li> <b><code>module (name)</code></b> <br>
-    Creates a module.
-    The function creates a new global table <i>name</i> (if it does not exists)
-    and sets it as the environment of the new module.
-    This table will inherit from the original global table so that it can
-    access (but not change) global values directly.
-    It is also set as the value of <tt>package.loaded[<i>name</i>]</tt>
-    in order to be returned by <tt>require</tt> function.
-    Function <tt>module</tt> also defines two names in the new namespace:
-    <tt>_NAME</tt>, the module name;
-    and <tt>_PACKAGE</tt>, the package name.
+<li><b><code>module (name)</code></b><br>
+ Creates a module. The function creates a new global table
+<i>name</i> (if it does not exists) and sets it as the environment
+of the new module. This table will inherit from the original global
+table so that it can access (but not change) global values
+directly. It is also set as the value of
+<tt>package.loaded[<i>name</i>]</tt> in order to be returned by
+<tt>require</tt> function. Function <tt>module</tt> also defines
+two names in the new namespace: <tt>_NAME</tt>, the module name;
+and <tt>_PACKAGE</tt>, the package name.</li>
 
-  <li> <b><code>require (name)</code></b> <br>
-    Loads a package.
-    First, checks whether is is already loaded by looking at table
-    <tt>package.loaded</tt> with the given <i>name</i> as the key.
-    Otherwise, it checks for a function at table <tt>package.preload</tt>.
-    Otherwise, it looks for a file <i>name</i> in the path
-    <tt>package.cpath</tt>;
-    if found, it tries to call function <tt>luaopen_<i>name</i></tt> on
-    that library to open it.
-    Otherwise, it looks for <i>name</i> in the path <tt>package.path</tt>;
-    if found, the file is loaded with <tt>loadfile</tt> and run.<br>
-    Returns: the content of <tt>package.loaded[<i>name</i>]</tt> after the
-    execution of the whole file/function.
+<li><b><code>require (name)</code></b><br>
+ Loads a package. First, checks whether is is already loaded by
+looking at table <tt>package.loaded</tt> with the given <i>name</i>
+as the key. Otherwise, it checks for a function at table
+<tt>package.preload</tt>. Otherwise, it looks for a file
+<i>name</i> in the path <tt>package.cpath</tt>; if found, it tries
+to call function <tt>luaopen_<i>name</i></tt> on that library to
+open it. Otherwise, it looks for <i>name</i> in the path
+<tt>package.path</tt>; if found, the file is loaded with
+<tt>loadfile</tt> and run.<br>
+ Returns: the content of <tt>package.loaded[<i>name</i>]</tt> after
+the execution of the whole file/function.</li>
 
-  <li> <b><code>static void luaL_module (lua_State *L, const char *libname, const luaL_reg *l, int nup)</code></b> <br>
-    Modified version of <tt>luaL_openlib</tt> which stores the table where
-    it opens the library in <tt>package.loaded[<i>libname</i>]</tt>
-
+<li><b><code>static void luaL_module (lua_State *L, const char
+*libname, const luaL_reg *l, int nup)</code></b><br>
+ Modified version of <tt>luaL_openlib</tt> which stores the table
+where it opens the library in
+<tt>package.loaded[<i>libname</i>]</tt></li>
 </ul>
 
+<a name="examples"></a> 
 
-<a name="examples"></a>
 <h2>Examples</h2>
 
-<p>
-Suppose the file <tt>m1.lua</tt> is as follows:
+<p>Suppose the file <tt>m1.lua</tt> is as follows:</p>
+
 <pre>
 module("m1") -- in Lua 5.1 this should be changed to module(...)
 
 local function format_words (x)
-	return string.gsub (x, "(%w)(%w*)", function (i,s)
-		return string.upper(i)..string.lower(s)
-	end)
+    return string.gsub (x, "(%w)(%w*)", function (i,s)
+        return string.upper(i)..string.lower(s)
+    end)
 end
 
 function format (x)
-	return "prefix"..format_words(x).."sufix"
+    return "prefix"..format_words(x).."sufix"
 end
 </pre>
 
-<p>
-And here is a possible use of the module <tt>m1.lua</tt>
+<p>And here is a possible use of the module <tt>m1.lua</tt></p>
+
 <pre>
 local f = require"m1"
 
@@ -145,38 +153,29 @@ s = f.format"this is a test string"
 print(s)
 </pre>
 
+<a name="credits"></a> 
 
-<a name="credits"></a>
 <h2>Credits</h2>
 
-<p>
-Compat-5.1 was designed and implemented by Roberto Ierusalimschy.
-The pair of C source and header files were coded by Diego Nehab.
-The Lua file was adapted by Tom&aacute;s Guisasola to work with the
-<a href="http://www.keplerproject.org/venv/">VEnv</a> library.
-It is distributed and maintained by
-<a href="http://www.keplerproject.org">The Kepler Project</a>
-which holds its copyright.
-</p>
+<p>Compat-5.1 was designed and implemented by Roberto
+Ierusalimschy. The pair of C source and header files were coded by
+Diego Nehab. The Lua file was adapted by Tom&aacute;s Guisasola to
+work with the <a href="http://www.keplerproject.org/venv/">VEnv</a>
+library. It is distributed and maintained by <a href=
+"http://www.keplerproject.org">The Kepler Project</a> which holds
+its copyright.</p>
 
+<a name="contact"></a> 
 
-<a name="contact"></a>
 <h2>Contact us</h2>
 
-<p>
-For more information please
-<a href="mailto:info-NO-SPAM-THANKS@keplerproject.org">contact us</a>.
-Comments are welcome!
-</p>
+<p>For more information please <a href=
+"mailto:info-NO-SPAM-THANKS@keplerproject.org">contact us</a>.
+Comments are welcome!</p>
 
-
-
-<p>
 <hr>
-<small>
-$Id: index.html,v 1.10 2004-11-11 15:32:22 tomas Exp $
-</small>
-
+<small>$Id: index.html,v 1.10 2004/11/11 15:32:22 tomas Exp
+$</small>
 </body>
 </html>
 
