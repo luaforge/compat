@@ -1,4 +1,9 @@
 --
+-- Compat-5.1 release 2
+-- Copyright Kepler Project 2004-2005 (http://www.keplerproject.org/compat)
+--
+
+--
 -- avoid overwriting the package table if it's already there
 --
 package = package or {}
