@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include <strings.h>
+#include <string.h>
 #include <lua.h>
 #include <lauxlib.h>
-#include <compat-5.1.h>
+#include "compat-5.1.h"
 
 static void getfield(lua_State *L, const char *name) {
     const char *end = strchr(name, '.');
@@ -48,11 +48,19 @@ LUALIB_API void luaL_module(lua_State *L, const char *libname,
                               const luaL_reg *l, int nup) {
   if (libname) {
     getfield(L, libname);  /* check whether lib already exists */
-    if (lua_isnil(L, -1)) {  /* no? */
-      lua_pop(L, 1);
-      lua_newtable(L);  /* create it */
+    if (lua_isnil(L, -1)) { 
+      lua_pop(L, 1); /* get rid of nil */
+      lua_newtable(L); /* create namespace for lib */
       lua_pushvalue(L, -1);
-      setfield(L, libname);  /* register it with given name */
+      setfield(L, libname);  /* register global name */
+      lua_pushstring(L, "package");
+      lua_gettable(L, LUA_GLOBALSINDEX);
+      lua_pushstring(L, "loaded");
+      lua_gettable(L, -2);
+      lua_pushstring(L, libname);
+      lua_pushvalue(L, -5);
+      lua_settable(L, -3); /* store namespace in package.loaded table */
+      lua_pop(L, 2); /* get rid of package and loaded tables */
     }
     lua_insert(L, -(nup+1));  /* move library table to below upvalues */
   }
