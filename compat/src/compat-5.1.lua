@@ -22,7 +22,8 @@ package.loaded.math = math
 package.loaded.io = io
 package.loaded.os = os
 package.loaded.table = table 
-package.loaded.base = base
+package.loaded.base = _G
+package.loaded.coroutine = coroutine
 
 --
 -- avoid overwriting the package.preload table if it's already there
