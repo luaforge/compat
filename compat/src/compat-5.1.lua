@@ -1,7 +1,15 @@
 --
--- Compat-5.1 release 2
+-- Compat-5.1 release 3
 -- Copyright Kepler Project 2004-2005 (http://www.keplerproject.org/compat)
+-- According to Lua 5.1 work 5
 --
+
+local LUA_DIRSEP = '/'
+local LUA_OFSEP = ''
+local POF = 'luaopen_'
+
+local assert, error, getfenv, ipairs, loadfile, loadlib, pairs, setfenv, setmetatable, type = assert, error, getfenv, ipairs, loadfile, loadlib, pairs, setfenv, setmetatable, type
+local format, gfind, gsub = string.format, string.gfind, string.gsub
 
 --
 -- avoid overwriting the package table if it's already there
@@ -35,62 +43,13 @@ package.loaded.coroutine = coroutine
 --
 package.preload = package.preload or {}
 
---
--- looks for a file `name' in given path
---
-local function search (path, name)
-  for c in string.gfind(path, "[^;]+") do
-    c = string.gsub(c, "%?", name)
-    local f = io.open(c)
-    if f then   -- file exist?
-      f:close()
-      return c
-    end
-  end
-  return nil    -- file not found
-end
-
-
---
--- new require
---
-local package = package
-local loaded = package.loaded
-local preload = package.preload
-function _G.require (name)
-  if not loaded[name] then
-    loaded[name] = true
-    local f = preload[name]
-    if not f then
-      local filename = string.gsub(name, "%.", "/")
-      local fullname = search(package.cpath, filename)
-      if fullname then
-        local openfunc = "luaopen_" .. string.gsub(name, "%.", "")
-        f = assert(loadlib(fullname, openfunc))
-      else
-        fullname = search(package.path, filename)
-        if not fullname then
-          error("cannot find "..name.." in path "..package.path, 2)
-        end
-        f = assert(loadfile(fullname))
-      end
-      preload[name] = f
-    end
-    local old_arg = arg
-    arg = { name }
-    local res = f(name)
-	arg = old_arg
-    if res then loaded[name] = res end
-  end
-  return loaded[name]
-end
-
 
 --
 -- auxiliar function to read "nested globals"
 --
 local function getfield (t, f)
-  for w in string.gfind(f, "[%w_]+") do
+  assert (type(f)=="string", "not a valid field name ("..tostring(f)..")")
+  for w in gfind(f, "[%w_]+") do
     if not t then return nil end
     t = t[w]
   end
@@ -102,12 +61,129 @@ end
 -- auxiliar function to write "nested globals"
 --
 local function setfield (t, f, v)
-  for w in string.gfind(f, "([%w_]+)%.") do
+  for w in gfind(f, "([%w_]+)%.") do
     t[w] = t[w] or {} -- create table if absent
     t = t[w]            -- get the table
   end
-  local w = string.gsub(f, "[%w_]+%.", "")   -- get last field name
+  local w = gsub(f, "[%w_]+%.", "")   -- get last field name
   t[w] = v            -- do the assignment
+end
+
+
+--
+-- looks for a file `name' in given path
+--
+local function search (path, name)
+  for c in gfind(path, "[^;]+") do
+    c = gsub(c, "%?", name)
+    local f = io.open(c)
+    if f then   -- file exist?
+      f:close()
+      return c
+    end
+  end
+  return nil    -- file not found
+end
+
+
+--
+-- check whether library is already loaded
+--
+local function loader_preload (name)
+  assert (type(name) == "string", format (
+    "bad argument #1 to `require' (string expected, got %s)", type(name)))
+  if type(package.preload) ~= "table" then
+    error ("`package.preload' must be a table")
+  end
+  return package.preload[name]
+end
+
+
+--
+-- C library loader
+--
+local function loader_C (name)
+  assert (type(name) == "string", format (
+    "bad argument #1 to `require' (string expected, got %s)", type(name)))
+  local fname = gsub (name, "%.", LUA_DIRSEP)
+  fname = search (package.cpath, fname)
+  if not fname then
+    return false
+  end
+  local funcname = POF .. gsub (name, "%.", LUA_OFSEP)
+  local f, err = loadlib (fname, funcname)
+  if not f then
+    error (format ("error loading package `%s' (%s)", name, err))
+  end
+  return f
+end
+
+
+--
+-- Lua library loader
+--
+local function loader_Lua (name)
+  assert (type(name) == "string", format (
+    "bad argument #1 to `require' (string expected, got %s)", type(name)))
+  local path = LUA_PATH
+  if not path then
+    path = assert (package.path, "`package.path' must be a string")
+  end
+  local fname = gsub (name, "%.", LUA_DIRSEP)
+  fname = search (path, fname)
+  if not fname then
+    return false
+  end
+  local f, err = loadfile (fname)
+  if not f then
+    error (format ("error loading package `%s' (%s)", name, err))
+  end
+  return f
+end
+
+
+-- create `loaders' table
+package.loaders = package.loaders or { loader_preload, loader_C, loader_Lua, }
+
+
+--
+-- iterate over available loaders
+--
+local function load (name, loaders)
+  -- iterate over available loaders
+  assert (type (loaders) == "table", "`package.loaders' must be a table")
+  for i, loader in ipairs (loaders) do
+    local f = loader (name)
+    if f then
+      return f
+    end
+  end
+  error (format ("package `%s' not found", name))
+end
+
+
+--
+-- new require
+--
+function _G.require (name)
+  assert (type(name) == "string", format (
+    "bad argument #1 to `require' (string expected, got %s)", type(name)))
+  local p = loaded[name] -- is it there?
+  if p then
+    return p
+  end
+  -- first mark it as loaded
+  loaded[name] = true
+  -- load and run init function
+  local actual_arg = _G.arg
+  _G.arg = { name }
+  local res = load(name, package.loaders)(name)
+  if res then 
+    loaded[name] = res -- store result
+  end
+  _G.arg = actual_arg
+  -- return value should be in loaded[name]
+  return loaded[name]
 end
 
 
@@ -125,10 +201,19 @@ function _G.module (name)
   end
   if not ns._NAME then
     ns._NAME = name
-    ns._PACKAGE = string.gsub(name, "[^.]*$", "")
+    ns._PACKAGE = gsub(name, "[^.]*$", "")
   end
   setmetatable(ns, {__index = _G})
   loaded[name] = ns
   setfenv(2, ns)
   return ns
+end
+
+
+--
+-- define functions' environments
+--
+local env = { loaded = package.loaded, package = package, _G = _G, }
+for i, f in ipairs { _G.module, _G.require, load, loader_preload, loader_C, loader_Lua, } do
+  setfenv (f, env)
 end
