@@ -5,7 +5,7 @@ TAR_FILE= $(PKG).tar.gz
 ZIP_FILE= $(PKG).zip
 SRCS= Makefile \
 	$(PKG).lua $(PKG).c $(PKG).h \
-	index.html license.html
+	index.html license.html compat.png
 
 dist: dist_dir
 	tar -czf $(TAR_FILE) $(DIST_DIR)
