@@ -1,7 +1,7 @@
 <html>
 
 <head>
-<title>Packages for Lua 5.0</title>
+<title>Packages for Lua</title>
 <style type="text/css">
 ul { list-style-type: disc };
 </style>
@@ -45,10 +45,14 @@ ul { list-style-type: disc };
 <p>
 The Package Compatibiblity (Compat-5.1) is a set of files which provides an
 implementation of the new package model of Lua 5.1 to be used in Lua 5.0.
+The set of files consists of a Lua file and a pair of a C source and header
+files.
+<p>
 The Lua file reimplements the function <tt>require</tt> following the new
 behavior and adds the function <tt>module</tt>;
 it also defines the table <tt>package</tt> and its standard fields:
 <tt>path</tt>, <tt>cpath</tt>, <tt>loaded</tt> and <tt>preload</tt>.
+<p>
 The C source file implements the function <tt>luaL_module</tt> which can
 replace the original <tt>luaL_openlib</tt> function.
 <p>
@@ -155,6 +159,7 @@ print(s)
 
 <p>
 Compat-5.1 was designed and implemented by Roberto Ierusalimschy.
+The pair of C source and header files were coded by Diego Nehab.
 The Lua file was adapted by Tom&aacute;s Guisasola to work with the
 <a href="http://www.keplerproject.org/venv/">VEnv</a> library.
 It is distributed and maintained by
@@ -177,7 +182,7 @@ Comments are welcome!
 <p>
 <hr>
 <small>
-$Id: index.html,v 1.1 2004-10-05 11:49:08 tomas Exp $
+$Id: index.html,v 1.2 2004-10-19 11:27:28 tomas Exp $
 </small>
 
 </body>
