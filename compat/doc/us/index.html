@@ -26,24 +26,21 @@ Lua 5.0</td>
 </table>
 </center>
 
-<center><small><a href="#over">overview</a> &middot; <a href=
-"#download">download</a> &middot; <a href=
-"#examples">examples</a></small></center>
+<center><small>
+<a href="#over">overview</a> &middot;
+<a href="#download">download</a> &middot;
+<a href="#examples">examples</a>
+</small></center>
 
 <hr>
 <h2>Contents</h2>
 
 <ul>
 <li><a href="#over">Overview</a></li>
-
 <li><a href="#version">Current Version</a></li>
-
 <li><a href="#download">Download</a></li>
-
 <li><a href="#examples">Examples</a></li>
-
 <li><a href="#credits">Credits</a></li>
-
 <li><a href="#contact">Contact us</a></li>
 </ul>
 
@@ -77,23 +74,28 @@ The original message of the proposal could be found
 
 <h2>Current version</h2>
 
-<p>Current version is compat-5.1 release 1. It was developed for
+<p>Current version is compat-5.1 release 2. It was developed for
 Lua 5.0.</p>
 
 <a name="download"></a> 
 
 <h2>Download</h2>
 
-<p>Compat-5.1 are a set of source files that can be downloaded from
-the <a href=
-"http://luaforge.net/project/showfiles.php?group_id=82">LuaForge
+<p>Compat-5.1 are a set of source files that can be downloaded from the
+<a href="http://luaforge.net/project/showfiles.php?group_id=82">LuaForge
 page</a>.</p>
 
 <h2>What's new</h2>
 
 <ul>
-<li>[29/oct/2004] Release 1</li>
+<li>[15/Dec/2004] Release 2</li>
+<li>[29/Oct/2004] Release 1</li>
 </ul>
+
+<p>
+Compat-5.1 release 2 fixes some bugs and misconceptions.
+It was based on the implementation of Lua 5.1 work 3.
+</p>
 
 <h2>Reference</h2>
 
@@ -123,14 +125,12 @@ open it. Otherwise, it looks for <i>name</i> in the path
 the execution of the whole file/function.</li>
 
 <li><b><code>static void luaL_module (lua_State *L, const char
-*libname, const luaL_reg *l, int nup)</code></b><br>
- Modified version of <tt>luaL_openlib</tt> which stores the table
-where it opens the library in
-<tt>package.loaded[<i>libname</i>]</tt></li>
+             *libname, const luaL_reg *l, int nup)</code></b><br>
+  Modified version of <tt>luaL_openlib</tt> which stores the table
+  where it opens the library in <tt>package.loaded[<i>libname</i>]</tt></li>
 </ul>
 
 <a name="examples"></a> 
-
 <h2>Examples</h2>
 
 <p>Suppose the file <tt>m1.lua</tt> is as follows:</p>
@@ -160,7 +160,6 @@ print(s)
 </pre>
 
 <a name="credits"></a> 
-
 <h2>Credits</h2>
 
 <p>Compat-5.1 was designed and implemented by Roberto
