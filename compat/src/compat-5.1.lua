@@ -177,7 +177,7 @@ function _G.require (name)
   -- load and run init function
   local actual_arg = _G.arg
   _G.arg = { name }
-  local res = load(name, package.loaders)(name)
+  local res = load(name, loaders)(name)
   if res then 
     loaded[name] = res -- store result
   end
@@ -213,7 +213,12 @@ end
 --
 -- define functions' environments
 --
-local env = { loaded = package.loaded, package = package, _G = _G, }
+local env = {
+	loaded = package.loaded,
+	loaders = package.loaders,
+	package = package,
+	_G = _G,
+}
 for i, f in ipairs { _G.module, _G.require, load, loader_preload, loader_C, loader_Lua, } do
   setfenv (f, env)
 end

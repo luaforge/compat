@@ -72,31 +72,71 @@ The original message of the proposal could be found
 <a href="http://lua-users.org/lists/lua-l/2004-09/msg00342.html">here</a>.
 </p>
 
+
+<a name="version"></a>
 <h2>Current version</h2>
 
-<p>Current version is compat-5.1 release 2. It was developed for
-Lua 5.0.</p>
+<p>
+Current version is compat-5.1 release 3
+(following Lua 5.1 work 5 implementation).
+It was developed for Lua 5.0.
+</p>
+
 
 <a name="download"></a> 
-
 <h2>Download</h2>
 
 <p>Compat-5.1 are a set of source files that can be downloaded from the
 <a href="http://luaforge.net/project/showfiles.php?group_id=82">LuaForge
 page</a>.</p>
 
+
+<a name="new"></a>
 <h2>What's new</h2>
 
 <ul>
+<li>[?/?/2005] Release 3</li>
 <li>[23/Dec/2004] Release 2</li>
 <li>[29/Oct/2004] Release 1</li>
 </ul>
 
 <p>
+Release 3 follows the implementation of Lua 5.1 work 5.
+The differences are on the implementation (see some
+<a href="#comments">technical comments</a> for more information).
+</p>
+<p>
 Compat-5.1 release 2 fixes some bugs and misconceptions.
 It was based on the implementation of Lua 5.1 work 3.
 </p>
 
+
+<a name="comments"></a>
+<h2>Technical comments</h2>
+
+<p>
+In Lua 5.0 all C functions share the same environment
+(which is obtained with the call <tt>getfenv(0)</tt> in Lua),
+while in 5.1w5, each C function has its own environment,
+which is the perfect place to store data.
+This way,
+C-upvalues became useless (they could be stored in the environment)
+and are deprecated.
+</p>
+<p>
+The implementation differences could be summarized in:
+<ul>
+  <li>Tables <tt>package</tt> and <tt>package.loaded</tt> are linked
+    to functions <tt>require()</tt> and <tt>module()</tt> so that there
+    is no way to change these tables <i>per se</i>, only its fields.
+  <li>Function <tt>require()</tt> uses a list of <i>loaders</i> which
+    are functions responsible for trying to load a module.
+    Table <tt>package.loaders</tt> store these functions.
+</ul>
+</p>
+
+
+<a name="reference"></a>
 <h2>Reference</h2>
 
 <ul>
@@ -129,6 +169,7 @@ the execution of the whole file/function.</li>
   Modified version of <tt>luaL_openlib</tt> which stores the table
   where it opens the library in <tt>package.loaded[<i>libname</i>]</tt></li>
 </ul>
+
 
 <a name="examples"></a> 
 <h2>Examples</h2>
