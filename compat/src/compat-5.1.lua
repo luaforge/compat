@@ -104,10 +104,12 @@ function _G.module (name)
   local ns = getfield(_G, name)         -- search for namespace
   if not ns then
     ns = {}                             -- create new namespace
-    setmetatable(ns, {__index = _G})
     setfield(_G, name, ns)
+  end
+  if not ns._NAME then
     ns._NAME = name
     ns._PACKAGE = string.gsub(name, "[^.]*$", "")
+    setmetatable(ns, {__index = _G})
   end
   _G.package.loaded[name] = ns
   setfenv(2, ns)
