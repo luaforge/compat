@@ -58,6 +58,8 @@ LUALIB_API void luaL_module(lua_State *L, const char *libname,
           lua_pushvalue(L, -1);
           setfield(L, "package.loaded");
       }
+      else if (!lua_istable(L, -1))
+        luaL_error(L, "name conflict for library `%s'", libname);
       lua_pushstring(L, libname);
       lua_pushvalue(L, -3); 
       lua_settable(L, -3); /* store namespace in package.loaded table */

@@ -111,6 +111,8 @@ function _G.module (name)
   if not ns then
     ns = {}                             -- create new namespace
     setfield(_G, name, ns)
+  elseif type(ns) ~= "table" then
+    error("name conflict for module `"..name.."'")
   end
   if not ns._NAME then
     ns._NAME = name
