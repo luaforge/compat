@@ -1,11 +1,11 @@
-VERSION= 5.1
-PKG= compat-$(VERSION)
+VERSION= r2
+PKG= compat-5.1$(VERSION)
 DIST_DIR= $(PKG)
 TAR_FILE= $(PKG).tar.gz
 ZIP_FILE= $(PKG).zip
-SRCS= Makefile \
-	$(PKG).lua $(PKG).c $(PKG).h \
+FILES= Makefile \
 	index.html license.html compat.png
+SRCS= compat-5.1.lua compat-5.1.c compat-5.1.h
 
 dist: dist_dir
 	tar -czf $(TAR_FILE) $(DIST_DIR)
