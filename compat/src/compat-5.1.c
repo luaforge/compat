@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include <lua.h>
-#include <lauxlib.h>
+#include "lua.h"
+#include "lauxlib.h"
 #include "compat-5.1.h"
 
 static void getfield(lua_State *L, const char *name) {
