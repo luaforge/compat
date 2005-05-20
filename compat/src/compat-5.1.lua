@@ -1,7 +1,7 @@
 --
 -- Compat-5.1 release 3
 -- Copyright Kepler Project 2004-2005 (http://www.keplerproject.org/compat)
--- According to Lua 5.1 work 5
+-- According to Lua 5.1 work 6
 --
 
 local LUA_DIRSEP = '/'
