@@ -14,7 +14,7 @@
 	<div id="product_logo"><a href="http://www.keplerproject.org">
 		<img alt="Compat logo" src="compat.png"/>
 	</a></div>
-	<div id="product_name"><big><b>Compat-5.1</b></big></div>
+	<div id="product_name"><big><strong>Compat-5.1</strong></big></div>
 	<div id="product_description">Lua 5.1 Package Compatibility for Lua 5.0</div>
 </div> <!-- id="product" -->
 
@@ -50,14 +50,14 @@ be used in Lua 5.0.
 The set of files consists of a Lua file and a
 pair of a C source and header files.</p>
 
-<p>The Lua file reimplements the function <tt>require</tt>
-following the new behavior and adds the function <tt>module</tt>;
-it also defines the table <tt>package</tt> and its standard fields:
-<tt>path</tt>, <tt>cpath</tt>, <tt>loaded</tt> and
-<tt>preload</tt>.</p>
+<p>The Lua file reimplements the function <code>require</code>
+following the new behavior and adds the function <code>module</code>;
+it also defines the table <code>package</code> and its standard fields:
+<code>path</code>, <code>cpath</code>, <code>loaded</code> and
+<code>preload</code>.</p>
 
-<p>The C source file implements the function <tt>luaL_module</tt>.
-This function can replace the original <tt>luaL_openlib</tt>
+<p>The C source file implements the function <code>luaL_module</code>.
+This function can replace the original <code>luaL_openlib</code>
 function.</p>
 
 <p>Compat-5.1 is free software and uses the same <a href=
@@ -73,7 +73,7 @@ The original message of the proposal could be found
 <h2><a name="status"></a>Status</h2>
 
 <p>
-Current version is compat-5.1 release 3 (following Lua 5.1 work 5 implementation).
+Current version is compat-5.1 release 3 (following Lua 5.1 work 6 implementation).
 It was developed for Lua 5.0.
 </p>
 
@@ -81,7 +81,7 @@ It was developed for Lua 5.0.
 <h2><a name="download"></a>Download</h2>
 
 <p>Compat-5.1 are a set of source files that can be downloaded from the
-<a href="http://luaforge.net/project/showfiles.php?group_id=82">LuaForge
+<a href="http://luaforge.net/projects/compat/files">LuaForge
 page</a>.</p>
 
 
@@ -89,13 +89,13 @@ page</a>.</p>
 <h2><a name="history"></a>History</h2>
 
 <ul>
-<li>[?/?/2005] Release 3</li>
+<li>[20/May/2005] Release 3</li>
 <li>[23/Dec/2004] Release 2</li>
 <li>[29/Oct/2004] Release 1</li>
 </ul>
 
 <p>
-Release 3 follows the implementation of Lua 5.1 work 5.
+Release 3 follows the implementation of Lua 5.1 work 6.
 The differences are on the implementation (see some
 <a href="#comments">technical comments</a> for more information).
 </p>
@@ -110,8 +110,8 @@ It was based on the implementation of Lua 5.1 work 3.
 
 <p>
 In Lua 5.0 all C functions share the same environment
-(which is obtained with the call <tt>getfenv(0)</tt> in Lua),
-while in 5.1w5, each C function has its own environment,
+(which is obtained with the call <code>getfenv(0)</code> in Lua),
+while in 5.1w6, each C function has its own environment,
 which is the perfect place to store data.
 This way,
 C-upvalues became useless (they could be stored in the environment)
@@ -119,56 +119,56 @@ and are deprecated.
 </p>
 <p>
 The implementation differences could be summarized in:
-<ul>
-  <li>Tables <tt>package</tt> and <tt>package.loaded</tt> are linked
-    to functions <tt>require()</tt> and <tt>module()</tt> so that there
-    is no way to change these tables <i>per se</i>, only its fields.
-  <li>Function <tt>require()</tt> uses a list of <i>loaders</i> which
-    are functions responsible for trying to load a module.
-    Table <tt>package.loaders</tt> store these functions.
-</ul>
 </p>
-
+<ul>
+  <li>Tables <code>package</code> and <code>package.loaded</code> are linked
+    to functions <code>require()</code> and <code>module()</code> so that there
+    is no way to change these tables <i>per se</i>, only its fields.</li>
+  <li>Function <code>require()</code> uses a list of <i>loaders</i> which
+    are functions responsible for trying to load a module.
+    Table <code>package.loaders</code> store these functions.</li>
+</ul>
 
 
 <h2><a name="reference"></a>Reference</h2>
 
-<ul>
-<li><b><code>module (name)</code></b><br>
- Creates a module. The function creates a new global table
+<dl>
+
+<dt><strong><code>module (name)</code></strong></dt>
+<dd>Creates a module. The function creates a new global table
 <i>name</i> (if it does not exists) and sets it as the environment
 of the new module. This table will inherit from the original global
 table so that it can access (but not change) global values
 directly. It is also set as the value of
-<tt>package.loaded[<i>name</i>]</tt> in order to be returned by
-<tt>require</tt> function. Function <tt>module</tt> also defines
-two names in the new namespace: <tt>_NAME</tt>, the module name;
-and <tt>_PACKAGE</tt>, the package name.</li>
+<code>package.loaded[<i>name</i>]</code> in order to be returned by
+<code>require</code> function. Function <code>module</code> also defines
+two names in the new namespace: <code>_NAME</code>, the module name;
+and <code>_PACKAGE</code>, the package name.</dd>
 
-<li><b><code>require (name)</code></b><br>
- Loads a package. First, checks whether is is already loaded by
-looking at table <tt>package.loaded</tt> with the given <i>name</i>
+<dt><strong><code>require (name)</code></strong></dt>
+<dd>Loads a package. First, checks whether is is already loaded by
+looking at table <code>package.loaded</code> with the given <i>name</i>
 as the key. Otherwise, it checks for a function at table
-<tt>package.preload</tt>. Otherwise, it looks for a file
-<i>name</i> in the path <tt>package.cpath</tt>; if found, it tries
-to call function <tt>luaopen_<i>name</i></tt> on that library to
+<code>package.preload</code>. Otherwise, it looks for a file
+<i>name</i> in the path <code>package.cpath</code>; if found, it tries
+to call function <code>luaopen_<i>name</i></code> on that library to
 open it. Otherwise, it looks for <i>name</i> in the path
-<tt>package.path</tt>; if found, the file is loaded with
-<tt>loadfile</tt> and run.<br>
- Returns: the content of <tt>package.loaded[<i>name</i>]</tt> after
-the execution of the whole file/function.</li>
+<code>package.path</code>; if found, the file is loaded with
+<code>loadfile</code> and run.<br/>
+ Returns: the content of <code>package.loaded[<i>name</i>]</code> after
+the execution of the whole file/function.</dd>
 
-<li><b><code>static void luaL_module (lua_State *L, const char
-             *libname, const luaL_reg *l, int nup)</code></b><br>
-  Modified version of <tt>luaL_openlib</tt> which stores the table
-  where it opens the library in <tt>package.loaded[<i>libname</i>]</tt></li>
-</ul>
-
+<dt><strong><code>static void luaL_module (lua_State *L, const char *libname, <br/>
+	const luaL_reg *l, int nup)</code></strong></dt>
+<dd>Modified version of <code>luaL_openlib</code> which stores the table
+  where it opens the library in <code>package.loaded[<i>libname</i>]</code></dd>
+  
+</dl>
 
 
 <h2><a name="examples"></a>Examples</h2>
 
-<p>Suppose the file <tt>m1.lua</tt> is as follows:</p>
+<p>Suppose the file <code>m1.lua</code> is as follows:</p>
 
 <pre class="example">
 module("m1") -- in Lua 5.1 this should be changed to module(...)
@@ -184,7 +184,7 @@ function format (x)
 end
 </pre>
 
-<p>And here is a possible use of the module <tt>m1.lua</tt></p>
+<p>And here is a possible use of the module <code>m1.lua</code></p>
 
 <pre class="example">
 local f = require"m1"
@@ -219,7 +219,7 @@ Comments are welcome!</p>
 <div id="about">
 	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
 	<p><small>
-	$Id: index.html,v 1.18 2005-05-20 20:03:58 uid20002 Exp $
+	$Id: index.html,v 1.19 2005-05-20 20:38:54 uid20006 Exp $
 	</small></p>
 </div> <!-- id="about" -->
 
