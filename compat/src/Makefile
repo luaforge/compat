@@ -18,3 +18,5 @@ clean:
 dist_dir:
 	mkdir -p $(DIST_DIR)
 	cp $(SRCS) $(DIST_DIR)
+
+	
