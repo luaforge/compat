@@ -174,7 +174,7 @@ install any binary or Lua module is to place it on the corresponding
 <p>Suppose the file <code>m1.lua</code> is as follows:</p>
 
 <pre class="example">
-module("m1") -- in Lua 5.1 this should be changed to module(...)
+module("m1") -- in Lua 5.1 this could be changed to module(...)
 
 local function format_words (x)
     return string.gsub (x, "(%w)(%w*)", function (i,s)
@@ -193,7 +193,7 @@ end
 local f = require"m1"
 
 assert (f == m1)
-s = f.format"this is a test string"
+s = f.format ("this is a test string")
 print(s)
 </pre>
 
@@ -204,7 +204,7 @@ print(s)
 <div id="about">
 	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
 	<p><small>
-	$Id: manual.html,v 1.4 2005-05-23 18:34:12 carregal Exp $
+	$Id: manual.html,v 1.5 2005-05-23 18:37:03 carregal Exp $
 	</small></p>
 </div> <!-- id="about" -->
 
