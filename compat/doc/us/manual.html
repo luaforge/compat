@@ -101,14 +101,13 @@ environment variable <code>LUA_INIT</code> as the absolute path to the file,
 preceeded by the character '@' (see the standalone interpreter documentation
 for more details).</p>
 
-<p>Another option is to define the environment variables <code>LUA_PATH</code>
-and <code>LUA_CPATH</code> so that Compat-5.1 can be found by Lua.</p>
-
 <p>Finally, the file <code>compat-5.1.lua</code> should be edited so that the
 default values for the variables <code>package.path</code> and
 <code>package.cpath</code> are correct for the target system. The variables
 values should follow the actual installation paths and library's
-name conventions for the target system (?.DLL for Windows, [lib]?.so for Unix etc).</p>
+name conventions for the target system (?.DLL for Windows, [lib]?.so for Unix etc).
+You can also define LUA_PATH and LUA_CPATH as environment variables so they are used
+instead of the defined default values.</p>
 
 <p>Once Compat-5.1 is properly installed and configured, all that is needed to
 install any binary or Lua module is to place it on the corresponding
@@ -188,7 +187,7 @@ print(s)
 <div id="about">
 	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
 	<p><small>
-	$Id: manual.html,v 1.1 2005-05-23 15:28:15 carregal Exp $
+	$Id: manual.html,v 1.2 2005-05-23 15:37:29 carregal Exp $
 	</small></p>
 </div> <!-- id="about" -->
 
