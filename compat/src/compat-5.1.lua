@@ -201,6 +201,7 @@ function _G.module (name)
   end
   if not ns._NAME then
     ns._NAME = name
+    ns._M = ns
     ns._PACKAGE = gsub(name, "[^.]*$", "")
   end
   setmetatable(ns, {__index = _G})
