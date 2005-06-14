@@ -54,8 +54,8 @@ LUALIB_API void luaL_module(lua_State *L, const char *libname,
       lua_pushliteral(L, "require");
       lua_gettable(L, LUA_GLOBALSINDEX); /* look for require */
       lua_getfenv(L, -1); /* getfenv(require) */
-      env = lua_gettop(L);
       lua_remove(L, -2); /* remove function require */
+      env = lua_gettop(L);
 
       lua_newtable(L); /* create namespace for lib */
       ns = lua_gettop(L);
@@ -73,7 +73,7 @@ LUALIB_API void luaL_module(lua_State *L, const char *libname,
       lua_settable(L, -3); /* package.loaded[libname] = ns */
       lua_pop(L, 1); /* get rid of package.loaded table */
       lua_pushvalue(L, ns); /* copy namespace */
-      setfield(L, LUA_GLOBALSINDEX, libname);  /* _G[libname] = ns */
+      setfield(L, LUA_GLOBALSINDEX, libname);
       lua_remove (L, env); /* remove env */
     }
     lua_insert(L, -(nup+1));  /* move library table to below upvalues */
