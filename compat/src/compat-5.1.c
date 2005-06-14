@@ -49,18 +49,18 @@ LUALIB_API void luaL_module(lua_State *L, const char *libname,
   if (libname) {
     getfield(L, LUA_GLOBALSINDEX, libname);  /* check whether lib already exists */
     if (lua_isnil(L, -1)) { 
-      int env;
+      int env, ns;
       lua_pop(L, 1); /* get rid of nil */
-      lua_pushvalue(L, LUA_GLOBALSINDEX);
       lua_pushliteral(L, "require");
-      lua_gettable(L, -2); /* look for require */
+      lua_gettable(L, LUA_GLOBALSINDEX); /* look for require */
       lua_getfenv(L, -1); /* getfenv(require) */
       env = lua_gettop(L);
 
       lua_newtable(L); /* create namespace for lib */
-      getfield(L, env, "package.loaded"); /* get package.loaded table or create it */
-      if (lua_isnil(L, -1)) {
-          lua_pop(L, 1);
+      ns = lua_gettop(L);
+      getfield(L, env, "package.loaded"); /* get package.loaded table */
+      if (lua_isnil(L, -1)) { /* create package.loaded table */
+          lua_pop(L, 1); /* remove previous result */
           lua_newtable(L);
           lua_pushvalue(L, -1);
           setfield(L, env, "package.loaded");
@@ -68,11 +68,12 @@ LUALIB_API void luaL_module(lua_State *L, const char *libname,
       else if (!lua_istable(L, -1))
         luaL_error(L, "name conflict for library `%s'", libname);
       lua_pushstring(L, libname);
-      lua_pushvalue(L, -3); 
-      lua_settable(L, -3); /* store namespace in package.loaded table */
+      lua_pushvalue(L, ns); 
+      lua_settable(L, -3); /* package.loaded[libname] = ns */
       lua_pop(L, 1); /* get rid of package.loaded table */
-      lua_pushvalue(L, -1);
-      setfield(L, LUA_GLOBALSINDEX, libname);  /* store namespace it in globals table */
+      lua_pushvalue(L, ns); /* copy namespace */
+      setfield(L, LUA_GLOBALSINDEX, libname);  /* _G[libname] = ns */
+      lua_remove (L, env); /* remove env */
     }
     lua_insert(L, -(nup+1));  /* move library table to below upvalues */
   }
