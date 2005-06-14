@@ -55,6 +55,7 @@ LUALIB_API void luaL_module(lua_State *L, const char *libname,
       lua_gettable(L, LUA_GLOBALSINDEX); /* look for require */
       lua_getfenv(L, -1); /* getfenv(require) */
       env = lua_gettop(L);
+      lua_remove(L, -2); /* remove function require */
 
       lua_newtable(L); /* create namespace for lib */
       ns = lua_gettop(L);
