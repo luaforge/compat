@@ -2,7 +2,7 @@
 -- Compat-5.1 release 3
 -- Copyright Kepler Project 2004-2005 (http://www.keplerproject.org/compat)
 -- According to Lua 5.1 work 6
--- $Id: compat-5.1.lua,v 1.14 2005-05-25 13:17:29 tomas Exp $
+-- $Id: compat-5.1.lua,v 1.15 2005-06-17 01:02:00 tomas Exp $
 --
 
 local LUA_DIRSEP = '/'
@@ -20,12 +20,13 @@ package = package or {}
 package.path = LUA_PATH or os.getenv("LUA_PATH") or
              ("./?.lua;" ..
               "/usr/local/share/lua/5.0/?.lua;" ..
+              "/usr/local/share/lua/5.0/?/?.lua;" ..
               "/usr/local/share/lua/5.0/?/init.lua" )
  
 package.cpath = os.getenv("LUA_CPATH") or
              "./?.so;" ..
              "/usr/local/lib/lua/5.0/?.so;" ..
-             "/usr/local/lib/lua/5.0/lib?.so"
+             "/usr/local/lib/lua/5.0/l?.so"
 
 --
 -- make sure require works with standard libraries
@@ -224,3 +225,5 @@ local env = {
 for i, f in ipairs { _G.module, _G.require, load, loader_preload, loader_C, loader_Lua, } do
   setfenv (f, env)
 end
+
+_COMPAT51 = true
