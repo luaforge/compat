@@ -2,8 +2,10 @@
 -- Compat-5.1 release 3
 -- Copyright Kepler Project 2004-2005 (http://www.keplerproject.org/compat)
 -- According to Lua 5.1 work 6
--- $Id: compat-5.1.lua,v 1.15 2005-06-17 01:02:00 tomas Exp $
+-- $Id: compat-5.1.lua,v 1.16 2005-06-17 01:05:25 tomas Exp $
 --
+
+_COMPAT51 = "Release 4"
 
 local LUA_DIRSEP = '/'
 local LUA_OFSEP = ''
@@ -225,5 +227,3 @@ local env = {
 for i, f in ipairs { _G.module, _G.require, load, loader_preload, loader_C, loader_Lua, } do
   setfenv (f, env)
 end
-
-_COMPAT51 = true
