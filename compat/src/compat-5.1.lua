@@ -1,11 +1,11 @@
 --
--- Compat-5.1 release 3
+-- Compat-5.1
 -- Copyright Kepler Project 2004-2005 (http://www.keplerproject.org/compat)
--- According to Lua 5.1 work 6
--- $Id: compat-5.1.lua,v 1.16 2005-06-17 01:05:25 tomas Exp $
+-- According to Lua 5.1
+-- $Id: compat-5.1.lua,v 1.17 2005-06-20 20:41:45 tomas Exp $
 --
 
-_COMPAT51 = "Release 4"
+_COMPAT51 = "Compat-5.1 R4"
 
 local LUA_DIRSEP = '/'
 local LUA_OFSEP = ''
@@ -27,6 +27,7 @@ package.path = LUA_PATH or os.getenv("LUA_PATH") or
  
 package.cpath = os.getenv("LUA_CPATH") or
              "./?.so;" ..
+             "./l?.so;" ..
              "/usr/local/lib/lua/5.0/?.so;" ..
              "/usr/local/lib/lua/5.0/l?.so"
 
