@@ -141,13 +141,13 @@ documentation for more details).</p>
 default values for the variables <code>package.path</code> and
 <code>package.cpath</code> are correct for the target system. The variables
 values should follow the actual installation paths and library's
-name conventions for the target system (?.DLL for Windows, [lib]?.so for Unix etc).
+name conventions for the target system (?.dll for Windows, [l]?.so for Unix etc).
 You can also define LUA_PATH and LUA_CPATH as environment variables so they are used
 instead of the defined default values.</p>
 
 <p>Once Compat-5.1 is properly installed and configured, all that is needed to
 install any binary or Lua module is to place it on the corresponding
-<code>package.path</code> or <code>package.cpath</code>.</p>
+<code>package.cpath</code> or <code>package.path</code> respectively.</p>
 
 <h2><a name="reference"></a>Reference</h2>
 
@@ -229,7 +229,7 @@ print(s)
 <div id="about">
 	<p><a href="http://validator.w3.org/check?uri=referer">
     <img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
-	<p><small>$Id: manual.html,v 1.11 2005-05-24 23:27:19 carregal Exp $</small></p>
+	<p><small>$Id: manual.html,v 1.12 2005-06-23 20:52:27 carregal Exp $</small></p>
 </div> <!-- id="about" -->
 
 </div> <!-- id="container" -->
