@@ -2,7 +2,7 @@
 -- Compat-5.1
 -- Copyright Kepler Project 2004-2005 (http://www.keplerproject.org/compat)
 -- According to Lua 5.1
--- $Id: compat-5.1.lua,v 1.17 2005-06-20 20:41:45 tomas Exp $
+-- $Id: compat-5.1.lua,v 1.18 2005-06-27 17:02:50 tomas Exp $
 --
 
 _COMPAT51 = "Compat-5.1 R4"
@@ -56,7 +56,7 @@ local function getfield (t, f)
   assert (type(f)=="string", "not a valid field name ("..tostring(f)..")")
   for w in gfind(f, "[%w_]+") do
     if not t then return nil end
-    t = t[w]
+    t = rawget(t, w)
   end
   return t
 end
