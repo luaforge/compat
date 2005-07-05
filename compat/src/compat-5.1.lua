@@ -2,13 +2,14 @@
 -- Compat-5.1
 -- Copyright Kepler Project 2004-2005 (http://www.keplerproject.org/compat)
 -- According to Lua 5.1
--- $Id: compat-5.1.lua,v 1.18 2005-06-27 17:02:50 tomas Exp $
+-- $Id: compat-5.1.lua,v 1.19 2005-07-05 19:12:00 tomas Exp $
 --
 
 _COMPAT51 = "Compat-5.1 R4"
 
 local LUA_DIRSEP = '/'
-local LUA_OFSEP = ''
+local LUA_OFSEP = '_'
+local OLD_LUA_OFSEP = ''
 local POF = 'luaopen_'
 
 local assert, error, getfenv, ipairs, loadfile, loadlib, pairs, setfenv, setmetatable, type = assert, error, getfenv, ipairs, loadfile, loadlib, pairs, setfenv, setmetatable, type
@@ -118,7 +119,11 @@ local function loader_C (name)
   local funcname = POF .. gsub (name, "%.", LUA_OFSEP)
   local f, err = loadlib (fname, funcname)
   if not f then
-    error (format ("error loading package `%s' (%s)", name, err))
+    funcname = POF .. gsub (name, "%.", OLD_LUA_OFSEP)
+    f, err = loadlib (fname, funcname)
+    if not f then
+      error (format ("error loading package `%s' (%s)", name, err))
+    end
   end
   return f
 end
