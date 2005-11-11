@@ -2,7 +2,7 @@
 -- Compat-5.1
 -- Copyright Kepler Project 2004-2005 (http://www.keplerproject.org/compat)
 -- According to Lua 5.1
--- $Id: compat-5.1.lua,v 1.20 2005-10-31 12:51:14 tomas Exp $
+-- $Id: compat-5.1.lua,v 1.21 2005-11-11 13:27:23 tomas Exp $
 --
 
 _COMPAT51 = "Compat-5.1 R5"
@@ -29,7 +29,7 @@ package.path = LUA_PATH or os.getenv("LUA_PATH") or
               "/usr/local/share/lua/5.0/?/?.lua;" ..
               "/usr/local/share/lua/5.0/?/init.lua" )
  
-package.cpath = os.getenv("LUA_CPATH") or
+package.cpath = LUA_CPATH or os.getenv("LUA_CPATH") or
              "./?.so;" ..
              "./l?.so;" ..
              "/usr/local/lib/lua/5.0/?.so;" ..
