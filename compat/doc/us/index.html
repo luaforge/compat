@@ -49,46 +49,50 @@
 
 <h2><a name="over"></a>Overview</h2>
 
-<p>The Package Compatibility (Compat-5.1) is a set of files which
-provides an implementation of the new
-<a href="http://lua-users.org/lists/lua-l/2004-09/msg00342.html">package model</a>
-of Lua 5.1 to be used with Lua 5.0. It consists of a Lua file and a
-pair of a C source and header files.</p>
+<p>The Package Compatibility (Compat-5.1) is a set of files which provides an
+implementation of the Lua 5.1 
+<a href="http://www.lua.org/manual/5.1/manual.html#5.3">package model</a>
+to be used with Lua 5.0. It can be used by developers of Lua and Lua/C packages
+as much as by users that want to use those packages.</p>
 
-<p>Compat-5.1 is free software and uses the same <a href=
-"license.html">license</a> as Lua 5.0. <a name="version"></a></p>
+<p>Compat-5.1 is free software and uses the same
+<a href="license.html">license</a> as Lua 5.0.</p>
 
 <h2><a name="status"></a>Status</h2>
 
-<p>Current version is compat-5.1 release 5 (following Lua 5.1 alpha implementation).
+<p>Current version is compat-5.1 release 5 (following Lua 5.1).
 It was developed for Lua 5.0.</p>
 
 <h2><a name="download"></a>Download</h2>
 
-<p>Compat-5.1 are a set of source files that can be downloaded from the
+<p>Compat-5.1 are a set of source files that can be downloaded from its
 <a href="http://luaforge.net/projects/compat/files">LuaForge page</a>.</p>
 
 <h2><a name="history"></a>History</h2>
 
 <dl class="history">
-    <dt><strong>Release 5</strong> [??/???/2005]</dt>
-    <dd>Release 5 follows the implementation of Lua 5.1 beta and
+    <dt><strong>Release 5</strong> [21/Feb/2006]</dt>
+    <dd>Release 5 follows the implementation of Lua 5.1 final and
     corrects some implementation bugs found on Release 4:<br />
     <ul>
-        <li>swap the order of C and Lua loaders (now: "preload", "Lua", "C")</li>
+        <li>swap the order of C and Lua loaders from "preload", "C", "Lua" to "preload", "Lua", "C"</li>
         <li>added <code>package.seeall</code> function</li>
-    </ul></dd>
+    </ul>
+    </dd>
 
     <dt><strong>Release 4</strong> [08/Jul/2005]</dt>
     <dd>Release 4 follows the implementation of Lua 5.1 work 6 and
     corrects some implementation bugs found on Release 3:<br />
     <ul>
         <li>Field <code>_M</code> added to namespace created by function
-        <code>module</code>, reffering to the namespace itself.</li>
+        <code>module</code>, refering to the namespace itself.</li>
+        
         <li>Internal lookup on tables (function <code>getfield</code>)
         uses <code>rawget</code> instead of normal indexing.</li>
+        
         <li>Lua-C stack cleanup in function <code>luaL_module/luaL_openlib</code>.</li>
-    </ul></dd>
+    </ul>
+    </dd>
 
     <dt><strong>Release 3</strong> [20/May/2005]</dt>
     <dd>Release 3 follows the implementation of Lua 5.1 work 6.
@@ -97,16 +101,19 @@ It was developed for Lua 5.0.</p>
         <li>Tables <code>package</code> and <code>package.loaded</code> are linked
         to functions <code>require()</code> and <code>module()</code> so that there
         is no way to change these tables <em>per se</em>, only its fields.</li>
+        
         <li>Function <code>require()</code> uses a list of <em>loaders</em> which
         are functions responsible for trying to load a module.
         Table <code>package.loaders</code> store these functions.</li>
+        
         <li>In Lua 5.0 all C functions share the same environment
         (which is obtained with the call <code>getfenv(0)</code> in Lua),
         while in 5.1w6, each C function has its own environment,
         which is the perfect place to store data.
         This way, C-upvalues became useless (they could be stored in the environment)
         and are deprecated.</li>
-    </ul></dd>
+    </ul>
+    </dd>
 
     <dt><strong>Release 2</strong> [23/Dec/2004]</dt>
     <dd>Compat-5.1 release 2 fixes some bugs and misconceptions.
@@ -128,8 +135,8 @@ its copyright.</p>
 
 <h2><a name="contact"></a>Contact us</h2>
 
-<p>For more information please <a href=
-"mailto:info-NO-SPAM-THANKS@keplerproject.org">contact us</a>.
+<p>For more information please
+<a href="mailto:info-NO-SPAM-THANKS@keplerproject.org">contact us</a>.
 Comments are welcome!</p>
 
 </div> <!-- id="content" -->
@@ -137,10 +144,9 @@ Comments are welcome!</p>
 </div> <!-- id="main" -->
 
 <div id="about">
-	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
-	<p><small>
-	$Id: index.html,v 1.30 2005-12-26 16:54:40 tomas Exp $
-	</small></p>
+	<p><a href="http://validator.w3.org/check?uri=referer">
+    <img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+	<p><small>$Id: index.html,v 1.31 2006-02-20 21:51:54 carregal Exp $</small></p>
 </div> <!-- id="about" -->
 
 </div> <!-- id="container" -->
