@@ -1,7 +1,7 @@
 /*
 ** Compat-5.1
-** Copyright Kepler Project 2004-2005 (http://www.keplerproject.org/compat/)
-** $Id: compat-5.1.h,v 1.7 2005-07-08 18:25:52 carregal Exp $
+** Copyright Kepler Project 2004-2006 (http://www.keplerproject.org/compat/)
+** $Id: compat-5.1.h,v 1.8 2006-02-20 21:12:47 carregal Exp $
 */
 
 #ifndef COMPAT_H

@@ -1,8 +1,8 @@
 --
 -- Compat-5.1
--- Copyright Kepler Project 2004-2005 (http://www.keplerproject.org/compat)
+-- Copyright Kepler Project 2004-2006 (http://www.keplerproject.org/compat)
 -- According to Lua 5.1
--- $Id: compat-5.1.lua,v 1.21 2005-11-11 13:27:23 tomas Exp $
+-- $Id: compat-5.1.lua,v 1.22 2006-02-20 21:12:47 carregal Exp $
 --
 
 _COMPAT51 = "Compat-5.1 R5"

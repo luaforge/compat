@@ -1,7 +1,7 @@
 /*
 ** Compat-5.1
-** Copyright Kepler Project 2004-2005 (http://www.keplerproject.org/compat)
-** $Id: compat-5.1.c,v 1.12 2005-07-08 18:25:52 carregal Exp $
+** Copyright Kepler Project 2004-2006 (http://www.keplerproject.org/compat)
+** $Id: compat-5.1.c,v 1.13 2006-02-20 21:12:47 carregal Exp $
 */
 
 #include <stdio.h>
